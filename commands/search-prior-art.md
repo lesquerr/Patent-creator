@@ -123,7 +123,7 @@ I'll create a comprehensive report with:
 
 ## Executive Summary
 - Invention: [Description]
-- Searcher: Claude Patent Creator
+- Searcher: Patent-creator
 - Date: [Date]
 - Databases: BigQuery (100M+ patents)
 - Conclusion: [Patentability assessment]

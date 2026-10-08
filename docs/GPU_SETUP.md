@@ -1,4 +1,10 @@
-# GPU Setup Guide
+# Patent-creator: GPU Setup Guide
+
+This guide is inherited from
+[Claude Patent Creator](https://github.com/RobThePCGuy/Claude-Patent-Creator)
+and maintained in the [Patent-creator fork](https://github.com/lesquerr/Patent-creator).
+Hardware descriptions and performance examples below are illustrative upstream
+context, not detection results for your machine.
 
 ## Your Current Status
 

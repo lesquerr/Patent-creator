@@ -1,4 +1,7 @@
-# USPTO Open Data Portal API Setup
+# Patent-creator: USPTO Open Data Portal API Setup
+
+This guide applies to [Patent-creator](https://github.com/lesquerr/Patent-creator),
+a fork of [Claude Patent Creator](https://github.com/RobThePCGuy/Claude-Patent-Creator).
 
 Complete guide for setting up the USPTO Open Data Portal API to access 11M+ patents in real-time.
 

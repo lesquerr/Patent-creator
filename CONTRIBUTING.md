@@ -1,13 +1,18 @@
-# Contributing to Claude Patent Creator
+# Contributing to Patent-creator
 
-Thank you for your interest in contributing! This guide covers the essentials.
+Thank you for your interest in contributing to
+[lesquerr/Patent-creator](https://github.com/lesquerr/Patent-creator)! This project
+is a fork of
+[RobThePCGuy/Claude-Patent-Creator](https://github.com/RobThePCGuy/Claude-Patent-Creator).
+Submit fork-specific issues and pull requests to the fork; upstream attribution
+and license notices must be preserved.
 
 ## Development Setup
 
 ```bash
 # Clone and set up
-git clone https://github.com/RobThePCGuy/Claude-Patent-Creator.git
-cd Claude-Patent-Creator
+git clone https://github.com/lesquerr/Patent-creator.git
+cd Patent-creator
 python -m venv venv
 venv\Scripts\activate  # Windows
 source venv/bin/activate  # Linux/macOS
@@ -99,4 +104,4 @@ def your_tool(param: str) -> dict:
 
 ## Questions?
 
-Open a [Question issue](https://github.com/RobThePCGuy/Claude-Patent-Creator/issues/new?template=question.md) or check the [README](README.md).
+Open a [Question issue](https://github.com/lesquerr/Patent-creator/issues/new?template=question.md) or check the [README](README.md).

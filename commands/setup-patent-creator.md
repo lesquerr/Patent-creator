@@ -1,11 +1,11 @@
 ---
-description: Run complete setup for Claude Patent Creator (install dependencies, download MPEP, build index)
+description: Run complete setup for Patent-creator (install dependencies, download MPEP, build index)
 allowed-tools: Bash
 ---
 
 # Setup Patent Creator
 
-Complete installation and configuration of the Claude Patent Creator MCP server.
+Complete installation and configuration of the Patent-creator MCP server.
 
 ## Instructions
 

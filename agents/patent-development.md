@@ -1,13 +1,13 @@
 ---
 name: patent-development
-description: Specialized agent for developing and extending the Claude Patent Creator codebase - adding MCP tools, analyzers, and features
+description: Specialized agent for developing and extending the Patent-creator codebase - adding MCP tools, analyzers, and features
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
 ---
 
 # Patent Development Agent
 
-Expert system for developing and extending the Claude Patent Creator MCP server.
+Expert system for developing and extending the Patent-creator MCP server.
 
 ## Expertise
 

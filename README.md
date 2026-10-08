@@ -1,4 +1,10 @@
-# Claude Patent Creator
+# Patent-creator
+
+**[Patent-creator](https://github.com/lesquerr/Patent-creator) is a fork of
+[Claude Patent Creator](https://github.com/RobThePCGuy/Claude-Patent-Creator),
+originally developed by RobThePCGuy.** This fork adds GitHub Copilot CLI skills,
+agents, and workflow documentation while keeping the original Python MCP
+server and Claude integration.
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
@@ -6,9 +12,12 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.9+-red.svg)](https://pytorch.org/)
 [![Status](https://img.shields.io/badge/status-beta%20(WIP)-orange.svg)](#project-status)
 
-**An AI-powered patent creation and analysis system for Claude Code.**
+**An AI-powered patent creation and analysis system for Claude Code and GitHub Copilot CLI.**
 
-I built this because I needed to file a patent myself. I used AI to build the system, used the system to file the patent, and it worked. Now it's open source so anyone can use it. You do not need to be a lawyer or a programmer. If you can describe your idea in a chat window, you can use this.
+The upstream author created the original system to help prepare their own
+patent application and released it as open source. This fork adapts that work
+for Copilot CLI. You do not need to be a lawyer or a programmer to begin:
+describe your idea in a chat window and use the guided workflows.
 
 In plain terms, this tool lets you:
 
@@ -37,16 +46,16 @@ This tool is built for people who cannot afford a mistake, so it is honest to a 
 ## Table of Contents
 
 - [What this tool will and will not do](#what-this-tool-will-and-will-not-do--read-this-first)
-- [Quick Start](#quick-start)
+- [Patent-creator Quick Start](#patent-creator-quick-start)
 - [What Can I Actually Do With This?](#what-can-i-actually-do-with-this)
 - [How It Works](#how-it-works)
-- [Installation Options](#installation-options)
+- [Patent-creator Installation Options](#patent-creator-installation-options)
 - [CLI Commands](#cli-commands)
 - [MCP Tools Reference](#mcp-tools-reference)
 - [Skills, Agents, and Slash Commands](#skills-agents-and-slash-commands)
 - [Configuration](#configuration)
 - [Requirements](#requirements)
-- [Architecture](#architecture)
+- [Patent-creator Architecture](#patent-creator-architecture)
 - [Performance](#performance)
 - [Known Issues](#known-issues)
 - [Glossary](#glossary)
@@ -57,7 +66,84 @@ This tool is built for people who cannot afford a mistake, so it is honest to a 
 
 ---
 
-## Quick Start
+## Patent-creator Quick Start
+
+### GitHub Copilot CLI (Windows, Skills and Agents + Existing MCP Server)
+
+Open Copilot CLI in this checkout. The native integration includes the existing
+17 patent skills, all 16 command workflows as additional skills, and 13 custom
+agents. It connects to the **existing, unchanged MCP server** for search,
+analysis, and diagrams. No Claude installation is needed for Copilot.
+The original Python code, setup, and Claude integration are preserved.
+
+With Python 3.10+ installed, run these commands from the repository root in
+PowerShell. To obtain this fork first:
+
+```powershell
+git clone https://github.com/lesquerr/Patent-creator.git
+Set-Location Patent-creator
+```
+
+If `.venv` and dependencies already exist, skip the first two commands below:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -e ".[dev]"
+
+# If your legal corpus/index is not yet built, use the existing commands.
+# Downloads/model loading/index building may take several minutes.
+.venv\Scripts\python.exe -m mcp_server.cli download-all
+.venv\Scripts\python.exe -m mcp_server.cli rebuild-index
+.venv\Scripts\python.exe -m mcp_server.cli health
+
+copilot
+```
+
+The workspace `.mcp.json` registers `patent-creator` using the local `.venv`
+interpreter and the original `mcp_server\server.py`. Start Copilot from the
+repository root; open `/mcp` to inspect connection status and available tools.
+If Copilot was already running when the configuration changed, restart it.
+The server requires source PDFs or a built index before it can start.
+
+In Copilot, enter `/skills reload`, then prompt:
+
+```text
+Use the create-patent skill to draft an application for my invention.
+Use the full-review skill to review this application.
+Use the search-prior-art skill to research my invention.
+```
+
+Select a specialist using `/agent`, for example `/agent patent-creator`.
+These are native **skills**, not Claude-style registered slash commands.
+Their files live in `.github\skills`; agent profiles are in `.github\agents`.
+To use them from another project, launch Copilot with
+`--add-dir "C:\path\to\Patent-creator"` and register the server in user
+scope with absolute paths (replace these example paths with your checkout):
+
+```powershell
+copilot mcp add patent-creator -- "C:\path\to\Patent-creator\.venv\Scripts\python.exe" "C:\path\to\Patent-creator\mcp_server\server.py"
+```
+
+Search credentials are inherited from environment variables:
+`GOOGLE_CLOUD_PROJECT` and optionally `GOOGLE_APPLICATION_CREDENTIALS` for
+BigQuery, `SERPAPI_API_KEY` for Google Patents, and `EPO_OPS_KEY` /
+`EPO_OPS_SECRET` for EPO OPS. The existing ignored `.env` file also works;
+real environment variables take precedence. Do not paste keys into chat.
+No Anthropic API key is needed with default HyDE off. Restart Copilot after
+changing its inherited environment.
+
+Copilot calls all 34 existing MCP tools (including async EPO operations) and
+can access the index-statistics resource. Use `/mcp` to inspect their actual
+input schemas; skills supply workflow guidance rather than replacing tools.
+Law search and citation-enriched US/EPO/PCT reviews require a built index;
+provider searches require credentials, and diagram rendering requires
+system Graphviz. Missing prerequisites are reported as errors, not successful
+checks. The existing `setup --non-interactive` command is still available
+for GPU provisioning and automated setup, but retains its original Claude
+registration attempt; Copilot configuration is independent.
+See [Copilot instructions](.github/copilot-instructions.md).
+
+### Claude Code
 
 Never used Claude Code? It's Anthropic's AI assistant that runs in a terminal or as a desktop app — [install it first](https://claude.com/claude-code) (a paid Claude subscription is the only cost to start). Then come back here; setup is one command and the tool talks you through the rest.
 
@@ -65,7 +151,9 @@ Pick the path that fits your setup. All three get you to the same place.
 
 ### Option A: Claude Code Plugin (Easiest)
 
-If you're already using Claude Code, this is the fastest way in:
+For the original Claude Code plugin, use the **upstream marketplace** below.
+This installs upstream's plugin, not the Copilot-adapted fork. To use
+Patent-creator's source code, use the fork installation options that follow.
 
 ```bash
 # Add the marketplace and install
@@ -79,7 +167,7 @@ If you're already using Claude Code, this is the fastest way in:
 ### Option B: One-Line Install
 
 ```bash
-pip install git+https://github.com/RobThePCGuy/Claude-Patent-Creator.git && patent-creator setup
+pip install git+https://github.com/lesquerr/Patent-creator.git && patent-creator setup
 ```
 
 This handles everything automatically: installs dependencies, detects your GPU, downloads MPEP PDFs (~500MB), builds the search index, and registers the MCP server with Claude Code. Restart Claude Code when it finishes.
@@ -87,9 +175,8 @@ This handles everything automatically: installs dependencies, detects your GPU, 
 ### Option C: Manual Install
 
 ```bash
-git clone https://github.com/RobThePCGuy/Claude-Patent-Creator.git
-cd Claude-Patent-Creator
-
+git clone https://github.com/lesquerr/Patent-creator.git
+cd Patent-creator
 # Optional: use a virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/macOS
@@ -131,11 +218,15 @@ Here are some real examples. You can type these directly in Claude Code and the 
 
 *Everything from here down gets progressively more technical. You do not need any of it to use the tool — the sections above plus the [Glossary](#glossary) are enough. This part is for developers, patent professionals, and the curious.*
 
-The system has two modes that can work independently or together:
+The system has three integrations that reuse the same Python engine:
 
 **MCP Server** is the engine. It exposes 20+ tools that any MCP-compatible client (Claude Code, Claude Desktop, etc.) can call programmatically. These tools handle search, analysis, and diagram generation.
 
 **Claude Code Plugin** adds the interactive layer. Skills activate automatically based on what you're doing. Agents handle long-running tasks in the background. Slash commands give you quick access to common workflows.
+
+**Copilot CLI Native Integration** uses repository skills and custom agents.
+The former Claude command workflows become named skills; the tools continue
+to run through the existing MCP server configured in `.mcp.json`.
 
 Under the hood, patent regulation search uses a hybrid approach: FAISS vector search finds semantically similar content, BM25 lexical search catches exact terminology matches, and a cross-encoder reranker sorts the combined results by relevance. Patent search goes through Google BigQuery's public patent dataset.
 
@@ -150,7 +241,7 @@ You (Claude Code) ──> MCP Server ──> Search / Analysis / Diagrams
 
 ---
 
-## Installation Options
+## Patent-creator Installation Options
 
 <details>
 <summary><strong>What the setup wizard does (step by step)</strong></summary>
@@ -173,7 +264,7 @@ python -m venv venv
 source venv/bin/activate  # Linux/macOS
 venv\Scripts\activate     # Windows
 
-pip install git+https://github.com/RobThePCGuy/Claude-Patent-Creator.git && patent-creator setup
+pip install git+https://github.com/lesquerr/Patent-creator.git && patent-creator setup
 ```
 
 If you go this route, remember to activate the venv before running any manual commands. Claude Code handles activation automatically.
@@ -184,7 +275,7 @@ If you go this route, remember to activate the venv before running any manual co
 <summary><strong>Loading as a local plugin (for development)</strong></summary>
 
 ```bash
-claude --plugin-dir ./Claude-Patent-Creator
+claude --plugin-dir ./Patent-creator
 ```
 
 This loads the plugin directly from your local checkout without installing from the marketplace.
@@ -237,7 +328,9 @@ claude plugin marketplace add RobThePCGuy/Claude-Patent-Creator
 claude plugin install claude-patent-creator-standalone@claude-patent-creator
 ```
 
-Re-run the install command after upgrades to refresh the skills.
+These commands install the upstream Claude plugin. Re-run the install command
+after upstream upgrades to refresh it. In this fork, Copilot loads the
+repository workflows from `.github\skills` instead.
 
 ### Analysis
 
@@ -429,10 +522,15 @@ See `pyproject.toml` for the complete list.
 
 ---
 
-## Architecture
+## Patent-creator Architecture
 
 ```
-claude-patent-creator/
+Patent-creator/
+├── .github/
+│   ├── skills/              # Copilot skills and command workflows (33)
+│   ├── agents/              # Copilot custom agents (13)
+│   └── copilot-instructions.md  # Fork-specific Copilot guidance
+├── .mcp.json                # Copilot connection to the existing MCP server
 ├── .claude-plugin/          # Plugin manifest and marketplace config
 ├── mcp_server/              # Core MCP server
 │   ├── server.py            # MCPServer entry point
@@ -455,6 +553,12 @@ claude-patent-creator/
 ```
 
 For the complete architecture documentation, development workflows, and troubleshooting guides, see [CLAUDE.md](CLAUDE.md).
+
+The repository is named `Patent-creator`; the Python distribution
+`claude-patent-creator`, CLI command `patent-creator`, MCP server identity,
+data-directory names, and Claude plugin identifiers retain their upstream
+names for compatibility. Documentation filenames such as `README.md` and
+`CLAUDE.md` remain unchanged so GitHub and assistant discovery keep working.
 
 ---
 
@@ -533,6 +637,18 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the development setup, branch naming,
 
 ## Credits
 
+### Upstream Project
+
+Patent-creator is maintained as a fork at
+[lesquerr/Patent-creator](https://github.com/lesquerr/Patent-creator).
+The original project is
+[RobThePCGuy/Claude-Patent-Creator](https://github.com/RobThePCGuy/Claude-Patent-Creator).
+Credit for the original patent workflows, Python MCP server, and Claude
+integration belongs to the upstream author and contributors. Original license
+and copyright notices are retained. `CHANGELOG.md` preserves upstream history;
+the fork's Copilot integration is described in this README and
+[Copilot instructions](.github/copilot-instructions.md).
+
 ### Open Source Dependencies
 
 This project builds on excellent open source work: [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk), [FAISS](https://github.com/facebookresearch/faiss) (Meta AI Research), [Sentence Transformers](https://www.sbert.net/) (UKP Lab), [HuggingFace Transformers](https://huggingface.co/transformers/), [PyTorch](https://pytorch.org/), [rank-bm25](https://github.com/dorianbrown/rank-bm25), [PyMuPDF](https://pymupdf.readthedocs.io/), [Graphviz](https://graphviz.org/), [Pydantic](https://docs.pydantic.dev/), and [Google Cloud BigQuery](https://cloud.google.com/bigquery).
@@ -549,7 +665,11 @@ MPEP, 35 USC, and 37 CFR are published by the USPTO. Patent data comes from Goog
 
 ## Project Status
 
-This project is in **beta**. I'm actively working on it, but not everything is polished and some features may not work as described. If you run into issues, [open one on GitHub](https://github.com/RobThePCGuy/Claude-Patent-Creator/issues) and I'll take a look.
+Patent-creator is in **beta**. Some features may not work as described.
+Report fork-specific issues in
+[lesquerr/Patent-creator](https://github.com/lesquerr/Patent-creator/issues).
+For upstream behavior and history, consult the
+[original repository](https://github.com/RobThePCGuy/Claude-Patent-Creator).
 
 For detailed documentation: [CLAUDE.md](CLAUDE.md) | For security issues: [SECURITY.md](SECURITY.md)
 
@@ -561,4 +681,5 @@ MIT License. See [LICENSE](LICENSE) for details.
 
 ---
 
-**Built with Claude Code.** The code is the output, but the real work is deciding what needs to exist and how the pieces fit together.
+**Originally built with Claude Code; adapted for GitHub Copilot CLI in this
+fork.** See the upstream attribution above.

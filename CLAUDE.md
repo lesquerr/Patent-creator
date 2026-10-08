@@ -1,10 +1,21 @@
-# CLAUDE.md
+# Patent-creator: Claude Code Reference
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with
+[Patent-creator](https://github.com/lesquerr/Patent-creator), a fork of
+[Claude Patent Creator](https://github.com/RobThePCGuy/Claude-Patent-Creator).
+Its filename remains `CLAUDE.md` for instruction discovery.
+
+**Using GitHub Copilot CLI?** Follow `.github\copilot-instructions.md` for
+Copilot skills/agents and the workspace `.mcp.json` connection to the existing
+MCP server. The Python server is unchanged. See the README's Copilot Windows
+quick start instead of the Claude-specific registration steps below.
 
 ## Quick Start
 
 ### As a Claude Code Plugin (Recommended)
+
+The marketplace below is the original upstream distribution, not this fork.
+Use the pip instructions below to install Patent-creator's source.
 
 ```bash
 # In Claude Code — add the marketplace and install the plugin
@@ -16,7 +27,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # One-line install (works with or without venv)
-pip install git+https://github.com/RobThePCGuy/Claude-Patent-Creator.git && patent-creator setup
+pip install git+https://github.com/lesquerr/Patent-creator.git && patent-creator setup
 
 # Restart Claude Code
 
@@ -39,7 +50,7 @@ pip install git+https://github.com/RobThePCGuy/Claude-Patent-Creator.git && pate
 python -m venv venv
 venv\Scripts\activate  # Windows
 source venv/bin/activate  # Linux/macOS
-pip install git+https://github.com/RobThePCGuy/Claude-Patent-Creator.git && patent-creator setup
+pip install git+https://github.com/lesquerr/Patent-creator.git && patent-creator setup
 ```
 
 **What you can do now:**
@@ -53,9 +64,9 @@ pip install git+https://github.com/RobThePCGuy/Claude-Patent-Creator.git && pate
 
 ---
 
-## Project Overview
+## Patent-creator Project Overview
 
-**Claude Patent Creator** - An MCP server providing USPTO MPEP-based patent creation guidance using RAG (Retrieval Augmented Generation).
+**Patent-creator** - An MCP server providing USPTO MPEP-based patent creation guidance using RAG (Retrieval Augmented Generation).
 
 ### Core Capabilities
 
@@ -172,7 +183,7 @@ Quick-access workflows for common patent tasks:
 
 ---
 
-## System Architecture
+## Patent-creator System Architecture
 
 ### Visual Architecture
 

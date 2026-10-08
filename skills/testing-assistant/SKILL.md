@@ -5,7 +5,7 @@ description: Manages testing lifecycle including unit tests, integration tests, 
 
 # Testing Assistant Skill
 
-Expert system for testing and validating the Claude Patent Creator.
+Expert system for testing and validating the Patent-creator.
 
 **FOR CLAUDE:** Test scripts in scripts/ directory.
 - Go directly to running appropriate test

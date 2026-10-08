@@ -5,7 +5,7 @@ description: Diagnoses and resolves MCP server registration failures, GPU detect
 
 # Troubleshooting Assistant Skill
 
-Expert diagnostic system for identifying and resolving Claude Patent Creator issues.
+Expert diagnostic system for identifying and resolving Patent-creator issues.
 
 ## When to Use
 

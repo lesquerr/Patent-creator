@@ -1,11 +1,11 @@
 ---
 name: setup-assistant
-description: Guides through installation, configuration, and first-time setup of the Claude Patent Creator system.
+description: Guides through installation, configuration, and first-time setup of the Patent-creator system.
 ---
 
 # Setup Assistant Skill
 
-Expert system for installing, configuring, and setting up the Claude Patent Creator MCP server.
+Expert system for installing, configuring, and setting up the Patent-creator MCP server.
 
 ## When to Use
 

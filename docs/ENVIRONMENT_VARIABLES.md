@@ -1,4 +1,7 @@
-# Setting Environment Variables
+# Patent-creator: Setting Environment Variables
+
+This guide applies to [Patent-creator](https://github.com/lesquerr/Patent-creator),
+a fork of [Claude Patent Creator](https://github.com/RobThePCGuy/Claude-Patent-Creator).
 
 This guide shows how to set environment variables for API keys on different platforms.
 

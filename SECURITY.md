@@ -1,4 +1,8 @@
-# Security Policy
+# Patent-creator Security Policy
+
+This policy applies to
+[lesquerr/Patent-creator](https://github.com/lesquerr/Patent-creator), a fork of
+[Claude Patent Creator](https://github.com/RobThePCGuy/Claude-Patent-Creator).
 
 ## Supported Versions
 
@@ -11,14 +15,15 @@
 
 **Do not open a public issue for security vulnerabilities.**
 
-Use [GitHub Security Advisories](https://github.com/RobThePCGuy/Claude-Patent-Creator/security/advisories/new) to report vulnerabilities privately.
+Use the fork's [GitHub Security page](https://github.com/lesquerr/Patent-creator/security)
+to check whether private reporting is enabled. If enabled, use **Report a
+vulnerability**. Do not send fork-specific reports to the upstream project
+unless the issue also affects upstream.
 
 ### Response Timeline
 
-- **Acknowledgment:** Within 48 hours
-- **Initial assessment:** Within 1 week
-- **Patch (critical):** Within 1 week
-- **Patch (high/medium):** Within 2-4 weeks
+Response times depend on the fork maintainer's availability. The upstream
+project's response targets do not constitute a commitment for this fork.
 
 ## Security Architecture
 

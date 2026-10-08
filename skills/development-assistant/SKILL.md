@@ -5,7 +5,7 @@ description: Guides through adding new features, MCP tools, analyzers, and exten
 
 # Development Assistant Skill
 
-Expert system for developing and extending the Claude Patent Creator. Guides through adding new MCP tools, analyzers, configuration options, and features while following best practices and existing patterns.
+Expert system for developing and extending the Patent-creator. Guides through adding new MCP tools, analyzers, configuration options, and features while following best practices and existing patterns.
 
 ## When to Use This Skill
 

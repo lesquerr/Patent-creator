@@ -211,7 +211,7 @@ older = searcher.search_by_keywords(query, start_year=2015, end_year=2021)
 ## Executive Summary
 - Invention: [Brief description]
 - Search Date: [Date]
-- Searcher: Claude Patent Creator
+- Searcher: Patent-creator
 - Databases: BigQuery (100M+ patents), USPTO API
 - Time Period: [Year range]
 
